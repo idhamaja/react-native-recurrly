@@ -6,7 +6,7 @@ export default function App() {
   return (
     <View className="flex-1 items-center justify-center bg-background">
       <Text className="text-3xl font-bold text-success">
-        Welcome to Idham Banyak Duit!
+        Welcome to my React Native Apps
       </Text>
 
       <Link href="/onboarding" className="mt-4 px-4 py-2 rounded bg-primary">
