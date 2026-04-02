@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "react_native_2026",
-    "slug": "react_native_2026",
+    "name": "react_native_recurrly",
+    "slug": "react_native_recurrly",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "reactnative2026",
+    "scheme": "reactnativerecurrly",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
