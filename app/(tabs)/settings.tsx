@@ -7,7 +7,7 @@ const SafeAreaView = styled(RNSafeAreaView);
 const Settings = () => {
   return (
     <SafeAreaView className="flex-1 bg-background p-5">
-      <Text>settings</Text>
+      <Text className="home-empty-state">settings</Text>
     </SafeAreaView>
   );
 };

@@ -13,6 +13,19 @@ export const formatCurrency = (value: number, currency = "USD"): string => {
   }
 };
 
+// export const formatCurrency = (value: number, currency = "IDR"): string => {
+//   try {
+//     return new Intl.NumberFormat("id-ID", {
+//       style: "currency",
+//       currency: "IDR",
+//       minimumFractionDigits: 0,
+//       maximumFractionDigits: 0,
+//     }).format(value);
+//   } catch {
+//     return value.toFixed(0);
+//   }
+// };
+
 export const formatSubscriptionDateTime = (value?: string): string => {
   if (!value) return "Not provided";
   const parsedDate = dayjs(value);
