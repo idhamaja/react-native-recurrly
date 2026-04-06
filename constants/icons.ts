@@ -17,23 +17,23 @@ import spotify from "@/assets/icons/spotify.png";
 import wallet from "@/assets/icons/wallet.png";
 
 export const icons = {
-  home,
-  wallet,
-  setting,
   activity,
   add,
+  adobe,
   back,
+  canva,
+  claude,
+  figma,
+  github,
+  home,
+  medium,
   menu,
-  plus,
   notion,
   openai,
-  adobe,
-  medium,
-  figma,
+  plus,
+  setting,
   spotify,
-  github,
-  claude,
-  canva,
+  wallet,
 } as const;
 
 export type IconKey = keyof typeof icons;

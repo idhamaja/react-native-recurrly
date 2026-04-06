@@ -12,9 +12,9 @@ import {
   HOME_SUBSCRIPTIONS,
   HOME_USER,
   UPCOMING_SUBSCRIPTIONS,
-} from "../constants/data";
-import { icons } from "../constants/icons";
-import images from "../constants/images";
+} from "../../constants/data";
+import { icons } from "../../constants/icons";
+import images from "../../constants/images";
 import { formatCurrency } from "../lib/utils";
 
 const SafeAreaView = styled(RNSafeAreaView);
@@ -68,7 +68,7 @@ export default function App() {
               />
             </View>
 
-            <ListHeading title="All Subsciption" />
+            <ListHeading title="All Subsciptions" />
           </>
         )}
         data={HOME_SUBSCRIPTIONS}
