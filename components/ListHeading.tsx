@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 const ListHeading = ({ title }: ListHeadingProps) => {
@@ -7,7 +6,7 @@ const ListHeading = ({ title }: ListHeadingProps) => {
       <Text className="list-title">{title}</Text>
 
       <TouchableOpacity className="list-action">
-        <Text className="list-action-text">View All</Text>
+        <Text className="list-action-text">View all</Text>
       </TouchableOpacity>
     </View>
   );

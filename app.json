@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react_native_recurrly",
-    "slug": "react_native_recurrly",
+    "name": "Recurrly",
+    "slug": "recurrly",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -56,6 +56,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3686adf6-08f9-4762-b304-8bb323975424"
+      }
     }
   }
 }
