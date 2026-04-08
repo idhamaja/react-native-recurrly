@@ -24,7 +24,7 @@ const SignUp = () => {
 
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
+const [code, setCode] = useState("");
 
   // Validation states
   const [emailTouched, setEmailTouched] = useState(false);
