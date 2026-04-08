@@ -1,3 +1,4 @@
+import CreateSubscriptionModal from "@/components/CreateSubscriptionModal";
 import ListHeading from "@/components/ListHeading";
 import SubscriptionCard from "@/components/SubscriptionCard";
 import UpcomingSubscriptionCard from "@/components/upcomingSubscriptionCard";
@@ -6,16 +7,13 @@ import { useUser } from "@clerk/expo";
 import dayjs from "dayjs";
 import { styled } from "nativewind";
 import { usePostHog } from "posthog-react-native";
-import { useState } from "react";
-import { FlatList, Image, Modal, Pressable, Text, View } from "react-native";
+import { useMemo, useState } from "react";
+import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import {
-  HOME_BALANCE,
-  HOME_SUBSCRIPTIONS,
-  UPCOMING_SUBSCRIPTIONS,
-} from "../../constants/data";
+import { HOME_BALANCE } from "../../constants/data";
 import { icons } from "../../constants/icons";
 import images from "../../constants/images";
+import { useSubscriptionStore } from "../lib/subscriptionStore";
 import { formatCurrency } from "../lib/utils";
 
 const SafeAreaView = styled(RNSafeAreaView);
@@ -27,6 +25,45 @@ export default function App() {
     string | null
   >(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { subscriptions, addSubscription } = useSubscriptionStore();
+
+  // Get upcoming subscriptions (active subscriptions with renewal date within next 7 days)
+  const upcomingSubscriptions = useMemo(() => {
+    const now = dayjs();
+    const nextWeek = now.add(7, "days");
+    return subscriptions
+      .filter(
+        (sub) =>
+          sub.status === "active" &&
+          dayjs(sub.renewalDate).isAfter(now) &&
+          dayjs(sub.renewalDate).isBefore(nextWeek),
+      )
+      .sort((a, b) => dayjs(a.renewalDate).diff(dayjs(b.renewalDate)));
+  }, [subscriptions]);
+
+  const handleSubscriptionPress = (item: Subscription) => {
+    const isExpanding = expandedSubscriptionId !== item.id;
+    setExpandedSubscriptionId((currentId) =>
+      currentId === item.id ? null : item.id,
+    );
+    posthog.capture(
+      isExpanding ? "subscription_expanded" : "subscription_collapsed",
+      {
+        subscription_name: item.name,
+        subscription_id: item.id,
+      },
+    );
+  };
+
+  const handleCreateSubscription = (newSubscription: Subscription) => {
+    addSubscription(newSubscription);
+    posthog.capture("subscription_created", {
+      subscription_name: newSubscription.name,
+      subscription_price: newSubscription.price,
+      subscription_frequency: newSubscription.frequency,
+      subscription_category: newSubscription.category,
+    });
+  };
 
   // Get user display name: firstName, fullName, or email
   const displayName =
@@ -76,9 +113,9 @@ export default function App() {
             <View className="mb-5">
               <ListHeading title="Upcoming" />
               <FlatList
-                data={UPCOMING_SUBSCRIPTIONS}
+                data={upcomingSubscriptions}
                 renderItem={({ item }) => (
-                  <UpcomingSubscriptionCard {...item} />
+                  <UpcomingSubscriptionCard daysLeft={0} {...item} />
                 )}
                 keyExtractor={(item) => item.id}
                 horizontal
@@ -94,17 +131,13 @@ export default function App() {
             <ListHeading title="All Subsciptions" />
           </>
         )}
-        data={HOME_SUBSCRIPTIONS}
+        data={subscriptions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <SubscriptionCard
             {...item}
             expanded={expandedSubscriptionId === item.id}
-            onPress={() =>
-              setExpandedSubscriptionId((currentId) =>
-                currentId === item.id ? null : item.id,
-              )
-            }
+            onPress={() => handleSubscriptionPress(item)}
           />
         )}
         extraData={expandedSubscriptionId}
@@ -116,25 +149,11 @@ export default function App() {
         contentContainerClassName="pb-40"
       />
 
-      <Modal visible={isModalVisible} animationType="slide" transparent>
-        <View className="flex-1 justify-center items-center bg-black/50">
-          <View className="bg-background p-4 rounded w-11/12">
-            <Text className="text-lg font-sans-bold text-primary mb-4">
-              Add Subscription
-            </Text>
-            <Text className="text-sm text-muted-foreground mb-4">
-              This is a placeholder modal. Implement the add-subscription form
-              here.
-            </Text>
-            <Pressable
-              className="auth-button bg-primary"
-              onPress={() => setIsModalVisible(false)}
-            >
-              <Text className="auth-button-text text-white">Close</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+      <CreateSubscriptionModal
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onSubmit={handleCreateSubscription}
+      />
     </SafeAreaView>
   );
 }

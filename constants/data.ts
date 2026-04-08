@@ -8,7 +8,7 @@ export const tabs: AppTab[] = [
 ];
 
 export const HOME_USER = {
-  name: "Idham | Mobile Dev",
+  name: "Adrian | JS Mastery",
 };
 
 export const HOME_BALANCE = {
@@ -56,6 +56,7 @@ export const HOME_SUBSCRIPTIONS: Subscription[] = [
     price: 77.49,
     currency: "USD",
     billing: "Monthly",
+    frequency: "Monthly",
     renewalDate: "2026-03-20T10:00:00.000Z",
     color: "#f5c542",
   },
@@ -71,6 +72,7 @@ export const HOME_SUBSCRIPTIONS: Subscription[] = [
     price: 9.99,
     currency: "USD",
     billing: "Monthly",
+    frequency: "Monthly",
     renewalDate: "2026-03-24T10:00:00.000Z",
     color: "#e8def8",
   },
@@ -86,6 +88,7 @@ export const HOME_SUBSCRIPTIONS: Subscription[] = [
     price: 20.0,
     currency: "USD",
     billing: "Monthly",
+    frequency: "Monthly",
     renewalDate: "2026-03-27T10:00:00.000Z",
     color: "#b8d4e3",
   },
@@ -101,12 +104,8 @@ export const HOME_SUBSCRIPTIONS: Subscription[] = [
     price: 119.99,
     currency: "USD",
     billing: "Yearly",
+    frequency: "Yearly",
     renewalDate: "2026-04-02T10:00:00.000Z",
     color: "#b8e8d0",
   },
 ];
-
-// Minimal default export so Expo Router doesn't treat this file as a route.
-export default function DataRouteStub() {
-  return null;
-}

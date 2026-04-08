@@ -17,13 +17,14 @@ declare global {
     icon: ImageSourcePropType;
     name: string;
     plan?: string;
-    category?: string;
+    category: string;
     paymentMethod?: string;
     status?: string;
     startDate?: string;
     price: number;
     currency?: string;
     billing: string;
+    frequency: string;
     renewalDate?: string;
     color?: string;
   }
